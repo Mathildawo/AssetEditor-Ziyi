@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net9.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+        <Nullable>enable</Nullable>
+        <LangVersion>preview</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Material.Icons.WPF" Version="2.1.10" />
+		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.1" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EmbeddedResources\Shared.EmbeddedResources.csproj" />
+    <ProjectReference Include="..\GameFiles\Shared.GameFormats.csproj" />
+    <ProjectReference Include="..\SharedCore\Shared.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="BaseDialogs\AeAttribute2.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="BaseDialogs\AeAttribute2.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>

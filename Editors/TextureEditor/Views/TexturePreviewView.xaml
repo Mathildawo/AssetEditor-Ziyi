@@ -1,0 +1,106 @@
+﻿<UserControl x:Class="TextureEditor.Views.TexturePreviewView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TextureEditor.Views" 
+             xmlns:System="clr-namespace:System;assembly=System.Runtime"
+              xmlns:s="http://schemas.singulink.com/xaml"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <System:Double x:Key="labelWidth">120</System:Double>
+        <System:Double x:Key="LayerImageSize">120</System:Double>
+    </UserControl.Resources>
+
+    <DockPanel >
+     
+        <DockPanel DockPanel.Dock="Right">
+            <GroupBox>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <Label Width="{StaticResource labelWidth}">Uv Channels</Label>
+                        <Label>:</Label>
+                        <ComboBox  HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                   SelectedValue="{Binding Path=ViewModel.UvChannelSelectedValue.Value, UpdateSourceTrigger=PropertyChanged}" 
+                                   ItemsSource="{Binding Path=ViewModel.UvChannelPossibleValues, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <Label Width="{StaticResource labelWidth}">Format</Label>
+                        <Label>:</Label>
+                        <Label  HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding Path=ViewModel.Format.Value, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <Label Width="{StaticResource labelWidth}">Width</Label>
+                        <Label>:</Label>
+                        <Label  HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding Path=ViewModel.Width.Value, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <Label Width="{StaticResource labelWidth}">Height</Label>
+                        <Label>:</Label>
+                        <Label  HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding Path=ViewModel.Height.Value, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <Label Width="{StaticResource labelWidth}">Num MipMaps</Label>
+                        <Label>:</Label>
+                        <Label  HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding ViewModel.NumMipMaps.Value, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+
+                    <Button Content="Image Details" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Click="{s:MethodBinding ShowTextureDetailsInfo}"/>
+               
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,10,0,0">
+                        <StackPanel>
+                            <Label HorizontalContentAlignment="Center" Width="40" >RGBA</Label>
+                            <RadioButton GroupName="RGBA"  IsChecked="{Binding ViewModel.FormatRgbaCheckbox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Image Source="{Binding Path=ViewModel.PreviewImage[0], UpdateSourceTrigger=PropertyChanged}" Width="{StaticResource LayerImageSize}" Height="{StaticResource LayerImageSize}" HorizontalAlignment="Right"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <StackPanel>
+                            <Label HorizontalContentAlignment="Center" Width="40">R</Label>
+                            <RadioButton GroupName="RGBA"  IsChecked="{Binding ViewModel.FormatRCheckbox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <Image Source="{Binding Path=ViewModel.PreviewImage[1], UpdateSourceTrigger=PropertyChanged}" Width="{StaticResource LayerImageSize}" Height="{StaticResource LayerImageSize}" HorizontalAlignment="Right"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <StackPanel>
+                            <Label HorizontalContentAlignment="Center" Width="40">G</Label>
+                            <RadioButton GroupName="RGBA" IsChecked="{Binding ViewModel.FormatGCheckbox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <Image Source="{Binding Path=ViewModel.PreviewImage[2], UpdateSourceTrigger=PropertyChanged}" Width="{StaticResource LayerImageSize}" Height="{StaticResource LayerImageSize}" HorizontalAlignment="Right"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <StackPanel>
+                            <Label HorizontalContentAlignment="Center" Width="40">B</Label>
+                            <RadioButton GroupName="RGBA" IsChecked="{Binding ViewModel.FormatBCheckbox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Image Source="{Binding Path=ViewModel.PreviewImage[3], UpdateSourceTrigger=PropertyChanged}" Width="{StaticResource LayerImageSize}" Height="{StaticResource LayerImageSize}" HorizontalAlignment="Right"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <StackPanel>
+                            <Label HorizontalContentAlignment="Center" Width="40" >A</Label>
+                            <RadioButton GroupName="RGBA" IsChecked="{Binding FormatACheckbox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Image Source="{Binding Path=ViewModel.PreviewImage[4], UpdateSourceTrigger=PropertyChanged}" Width="{StaticResource LayerImageSize}" Height="{StaticResource LayerImageSize}" HorizontalAlignment="Right"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </DockPanel>
+
+        <DockPanel DockPanel.Dock="Bottom" >
+            <Label DockPanel.Dock="Left" Content="Image Path:" FontWeight="Bold"/>
+            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center" Content="{Binding Path=ViewModel.ImagePath.Value, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+
+        <Image  Source="{Binding Path=ViewModel.ActiveImage.Value, UpdateSourceTrigger=PropertyChanged}"/>
+
+    </DockPanel>
+</UserControl>

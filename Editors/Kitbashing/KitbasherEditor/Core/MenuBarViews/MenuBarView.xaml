@@ -1,0 +1,98 @@
+﻿<UserControl x:Class="KitbasherEditor.Views.MenuBarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewmodel="clr-namespace:KitbasherEditor.ViewModels.MenuBarViews"
+             xmlns:menusystem="clr-namespace:Shared.Ui.Common.MenuSystem;assembly=Shared.Ui"
+             mc:Ignorable="d" Loaded="UserControl_Loaded" >
+    <UserControl.Resources>
+
+        <Style x:Key="VerticalSeparatorStyle" 
+            TargetType="{x:Type Separator}"
+            BasedOn="{StaticResource {x:Type Separator}}">
+            <Setter Property="Margin" Value="6,0,6,0"/>
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <TransformCollection>
+                                <RotateTransform Angle="90"/>
+                            </TransformCollection>
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ImageStyle" TargetType="Image">
+            <Setter Property="Height" Value="28"/>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.05"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <DataTemplate x:Key="defaultButtonTemplate">
+            <Button ToolTip="{Binding Action.ToolTipAttribute.Value}" BorderThickness="0" Background="Transparent" Margin="1" 
+                    IsEnabled="{Binding Action.IsActionEnabled.Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                    Command="{Binding Path=Action.Command}" 
+                    ToolTipService.ShowOnDisabled="True"
+                    Style="{StaticResource NoBackgroundOnDisabledButton}"
+                    Visibility="{Binding IsVisible.Value, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource BoolToCollapsedConverter}}">
+                <Image Style="{StaticResource ImageStyle}" Source="{Binding Image}"/>
+            </Button>
+        </DataTemplate>
+
+        <DataTemplate x:Key="radioButtonTemplate">
+            <RadioButton    ToolTip="{Binding  Action.ToolTipAttribute.Value}"  BorderThickness="0" Background="Transparent" Margin="1"
+                            IsChecked="{Binding IsChecked.Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                            Command="{Binding Path=Action.Command}"
+                            GroupName="{Binding GroupName}" 
+                            Style="{StaticResource {x:Type ToggleButton}}"
+                            IsEnabled="{Binding Action.IsActionEnabled.Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                            ToolTipService.ShowOnDisabled="True"
+                            Visibility="{Binding IsVisible.Value, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource BoolToCollapsedConverter}}">
+                <Image Style="{StaticResource ImageStyle}" Source="{Binding Image}"/>
+            </RadioButton>
+        </DataTemplate>
+
+        <DataTemplate x:Key="seperatorButtonTemplate">
+            <Separator Style="{DynamicResource VerticalSeparatorStyle}" />
+        </DataTemplate>
+
+        <viewmodel:ButtonDataTemplateSelector x:Key="buttonStyleSelector"
+            DefaultButtonTemplate="{StaticResource defaultButtonTemplate}" 
+            RadioButtonTemplate="{StaticResource radioButtonTemplate}"
+            SeperatorTemplate="{StaticResource seperatorButtonTemplate}"/>
+    </UserControl.Resources>
+
+    <DockPanel>
+        <Menu ItemsSource="{Binding MenuItems}"  DockPanel.Dock="Top">
+            <Menu.Resources>
+                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+                    <Setter Property="Header" Value="{Binding NameAttribute.Value}" />
+                    <Setter Property="Command" Value="{Binding Action.Command}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSeparator}" Value="True">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type MenuItem}">
+                                        <Separator />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+
+                <HierarchicalDataTemplate DataType="{x:Type menusystem:ToolbarItem}" ItemsSource="{Binding Children}" />
+            </Menu.Resources>
+        </Menu>
+
+        <ToolBarTray DockPanel.Dock="Top" VerticalAlignment="Center">
+            <ToolBar ItemsSource="{Binding Path=CustomButtons}" ItemTemplateSelector="{StaticResource buttonStyleSelector}"  />
+        </ToolBarTray>
+    </DockPanel>
+</UserControl>

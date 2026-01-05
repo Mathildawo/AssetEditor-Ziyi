@@ -1,0 +1,141 @@
+﻿<UserControl x:Class="AssetEditor.Views.MenuBarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AssetEditor.Views" 
+             xmlns:viewModels="clr-namespace:AssetEditor.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="800">
+
+    <DockPanel>
+        <Menu VerticalAlignment="Center"
+              DockPanel.Dock="Left"
+              Background="Transparent">
+            <Menu.Resources>
+                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}"/>
+            </Menu.Resources>
+
+            <MenuItem Header="_File" BorderThickness="1.5" WindowChrome.IsHitTestVisibleInChrome="True" Click="MenuItem_Click">
+
+                <MenuItem Header="New Pack" Command="{Binding MenuBar.CreateNewPackFileCommand}"/>
+                <MenuItem Header="New AnimPack (Warhammer III)" Command="{Binding MenuBar.CreateAnimPackWarhammer3Command}"/>
+                <MenuItem Header="New AnimPack (Three Kingdoms)" Command="{Binding MenuBar.CreateAnimPack3kCommand}"/>
+
+                <Separator/>
+                <MenuItem Header="Save active pack" Command="{Binding MenuBar.SaveActivePackCommand}"/>
+                <Separator/>
+
+                <MenuItem Header="Open Pack" Command="{Binding MenuBar.OpenPackFileCommand}"/>
+
+                <MenuItem Header="Open Recent Packs" ItemsSource="{Binding MenuBar.RecentPackFiles}">
+                    <MenuItem.Style>
+                        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+                            <Style.Triggers>
+                                <Trigger Property="HasItems" Value="False">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </MenuItem.Style>
+                    <MenuItem.ItemContainerStyle>
+                        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+                            <Setter Property="Command" Value="{Binding Command}" />
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
+                    <MenuItem.ItemTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type viewModels:RecentPackFileItem}" ItemsSource="{Binding Path=MenuItems}">
+                            <TextBlock Text="{Binding Header}"/>
+                        </HierarchicalDataTemplate>
+                    </MenuItem.ItemTemplate>
+                </MenuItem>
+
+                <MenuItem Header="Open Game Packs">
+                    <MenuItem Header="Attila" Command="{Binding MenuBar.OpenAttilaPacksCommand}"/>
+                    <MenuItem Header="Rome Remastered" Command="{Binding MenuBar.OpenRomeRemasteredPacksCommand}"/>
+                    <MenuItem Header="Three Kingdoms" Command="{Binding MenuBar.OpenThreeKingdomsPacksCommand}"/>
+                    <MenuItem Header="Warhammer II" Command="{Binding MenuBar.OpenWarhammer2PacksCommand}"/>
+                    <MenuItem Header="Warhammer III" Command="{Binding MenuBar.OpenWarhammer3PacksCommand}"/>
+                    <MenuItem Header="Troy" Command="{Binding MenuBar.OpenTroyPacksCommand}"/>
+                </MenuItem>
+
+                <Separator/>
+                <MenuItem Header="Settings" Command="{Binding MenuBar.OpenSettingsWindowCommand}"/>
+
+                <Separator/>
+
+                <MenuItem Header="Open AssetEditor Folder" Command="{Binding MenuBar.OpenAssetEditorFolderCommand}"/>
+                <MenuItem Header="Clear AssetEditor Folder" Command="{Binding MenuBar.ClearAssetEditorFolderCommand}"/>
+
+                <Separator/>
+
+                <MenuItem Header="_Exit" Command="{Binding MenuBar.CloseApplicationCommand}"/>
+            </MenuItem>
+
+            <MenuItem Header="View" BorderThickness="1.5" WindowChrome.IsHitTestVisibleInChrome="True">
+                <MenuItem Header="Toggle Pack File Browser" Command="{Binding MenuBar.TogglePackFileExplorerCommand}"/>
+            </MenuItem>
+
+            <MenuItem Header="Tools" BorderThickness="1.5" WindowChrome.IsHitTestVisibleInChrome="True" ItemsSource="{Binding MenuBar.Editors}">
+
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Command" Value="{Binding OpenEditorCommand}" />
+                        <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+
+                <MenuItem.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type viewModels:EditorShortcutViewModel}" ItemsSource="{Binding Path=MenuItems}">
+                        <TextBlock Text="{Binding DisplayName}"/>
+                    </HierarchicalDataTemplate>
+                </MenuItem.ItemTemplate>
+
+            </MenuItem>
+
+            <MenuItem Header="Reports" BorderThickness="1.5" WindowChrome.IsHitTestVisibleInChrome="True">
+                <MenuItem Header="Rmv2" Command="{Binding MenuBar.GenerateRmv2ReportCommand}"/>
+                <MenuItem Header="Meta Data" Command="{Binding MenuBar.GenerateMetaDataReportCommand}"/>
+                <MenuItem Header="File List" Command="{Binding MenuBar.GenerateFileListReportCommand}"/>
+                <MenuItem Header="Meta Jsons" Command="{Binding MenuBar.GenerateMetaDataJsonsReportCommand}"/>
+                <MenuItem Header="Materials" Command="{Binding MenuBar.GenerateMaterialReportCommand}"/>
+                <MenuItem Header="Dialogue Events with State Groups" Command="{Binding MenuBar.GenerateDialogueEventInfoPrinterReportCommand}"/>
+                <MenuItem Header="Dialogue Event and Event Names" Command="{Binding MenuBar.GenerateDialogueEventAndEventNamePrinterReportCommand}"/>
+                <MenuItem Header="Dat Dump" Command="{Binding MenuBar.GenerateDatDumperReportCommand}"/>
+                <Separator/>
+                <MenuItem Header="Search" Command="{Binding MenuBar.SearchCommand}"/>
+                <Separator/>
+                <MenuItem Header="Touched Files">
+                    <MenuItem Header="Start Recorder" Command="{Binding MenuBar.TouchedFileRecorderStartCommand }"/>
+                    <MenuItem Header="Print Files" Command="{Binding MenuBar.TouchedFileRecorderPrintCommand }"/>
+                    <MenuItem Header="Extract to Pack" Command="{Binding MenuBar.TouchedFileRecorderExtractCommand }"/>
+                    <MenuItem Header="Stop Recorder" Command="{Binding MenuBar.TouchedFileRecorderStopCommand }"/>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Debug - Clear Console" Command="{Binding MenuBar.ClearConsoleCommand}" />
+                <MenuItem Header="Debug - Print Scopes" Command="{Binding MenuBar.PrintScopeCommand}" />
+            </MenuItem>
+
+            <MenuItem Header="Help" BorderThickness="1.5" WindowChrome.IsHitTestVisibleInChrome="True">
+                <MenuItem Header="Modding Wiki" Command="{Binding MenuBar.OpenHelpCommand}"/>
+
+                <Separator/>
+
+                <MenuItem Header="Video Tutorials">
+                    <MenuItem Header="AssetEditor Basics 1" Command="{Binding MenuBar.OpenAssetEdBasic0TutorialCommand}"/>
+                    <MenuItem Header="AssetEditor Basics 2" Command="{Binding MenuBar.OpenAssetEdBasic1TutorialCommand}"/>
+                    <MenuItem Header="Skrag Reskin" Command="{Binding MenuBar.OpenSkragTutorialCommand}"/>
+                    <MenuItem Header="Tzar Guard with Gun" Command="{Binding MenuBar.OpenTzarGuardTutorialCommand}"/>
+                    <MenuItem Header="Kostaltyn Reskin" Command="{Binding MenuBar.OpenKostalynTutorialCommand}"/>
+                    <MenuItem Header="Recolouring Models" Command="{Binding MenuBar.OpenRecolouringModelsTutorialCommand}"/>
+                    <MenuItem Header="Animation Basics" Command="{Binding MenuBar.OpenAnimationBasicsTutorialCommand}"/>
+                    <MenuItem Header="Animated Props and Custom Animation Packs" Command="{Binding MenuBar.OpenAnimatedPropTutorialCommand}"/>
+                </MenuItem>
+
+                <Separator/>
+
+                <MenuItem Header="Discord" Command="{Binding MenuBar.OpenDiscordCommand}"/>
+            </MenuItem>
+        </Menu>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,88 @@
+{
+  "profiles": {
+    "AssetEditor": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    },
+    "AE-KitbashKarl": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg Kitbash_Karl",
+      "nativeDebugging": false
+    },
+    "AE-KitbashRat": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg Kitbash_Rat",
+      "nativeDebugging": false
+    },
+    "AE-KitbashOx": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg Kitbash_Ox",
+      "nativeDebugging": false
+    },
+    "AE-KitbashRomeShield": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg Kitbash_RomeShield",
+      "nativeDebugging": false
+    },
+    "AE-TextureKarl": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg Texture_Karl",
+      "nativeDebugging": false
+    },
+    "AE-AudioEditor_Wh3": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg AudioEditor_Wh3",
+      "nativeDebugging": false
+    },
+    "AE-AudioExplorer_Wh3": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg AudioExplorer_Wh3",
+      "nativeDebugging": false
+    },
+    "AE-AudioExplorer_Attila": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg AudioExplorer_Attila",
+      "nativeDebugging": false
+    },
+    "AE-SuperView": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg SuperView_Rat",
+      "nativeDebugging": false
+    },
+    "AE-AnimTransfer": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg AnimTransfer_DwarfArcher",
+      "nativeDebugging": false
+    },
+    "AE-KitbashKarl_WH2": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg Kitbash_Karl_WH2",
+      "nativeDebugging": false
+    },
+    "AE-SkeletonTool": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg SkeletonTool",
+      "nativeDebugging": false
+    },
+    "AE-AnimMeta": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg AnimMetaTool",
+      "nativeDebugging": false
+    },
+    "AE-Export-Karl": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg Export_Karl",
+      "nativeDebugging": false
+    },
+    "AE-Kitbash-Import": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg Import_Karl",
+      "nativeDebugging": false
+    },
+    "AE-Twui": {
+      "commandName": "Project",
+      "commandLineArgs": "-devcfg TwuiToolEditor",
+      "nativeDebugging": false
+    }
+  }
+}

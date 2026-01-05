@@ -1,0 +1,261 @@
+﻿<Window x:Class="AssetEditor.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:AssetEditor.Views" 
+        xmlns:viewFactory="clr-namespace:Shared.Ui.Common.DataTemplates;assembly=Shared.Ui"
+        xmlns:datatemplates="clr-namespace:Shared.Ui.Common.DataTemplates;assembly=Shared.Ui"
+        xmlns:behaviors="clr-namespace:Shared.Ui.Common.Behaviors;assembly=Shared.Ui" 
+        xmlns:common="clr-namespace:Shared.Ui.Common;assembly=Shared.Ui"
+        xmlns:local="clr-namespace:AssetEditor" 
+        xmlns:materialIcons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF" 
+        xmlns:viewmodels="clr-namespace:AssetEditor.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        mc:Ignorable="d"
+        behaviors:WindowCancellableClosingBehavior.Closing="{Binding ClosingCommand}"
+        behaviors:WindowCancellableClosingBehavior.IsClosingWithoutPrompt="{Binding IsClosingWithoutPrompt}"
+        Style="{StaticResource CustomWindowStyle}"
+        x:Name="window"
+        Width="1280"
+        Height="720"
+        BorderThickness="{Binding RelativeSource={RelativeSource Mode=Self}, Path=WindowState, Converter={StaticResource windowStateToThicknessConverter}}"
+        ResizeMode="CanResize"
+        WindowStyle="None"
+        Title="{Binding ApplicationTitle, UpdateSourceTrigger=PropertyChanged}">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CornerRadius="{x:Static SystemParameters.WindowCornerRadius}"
+            GlassFrameThickness="1,0,1,1"
+            NonClientFrameEdges="Left,Right,Bottom"
+            ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}"
+            UseAeroCaptionButtons="False">
+            <WindowChrome.CaptionHeight>
+                <MultiBinding Converter="{StaticResource captionHeightConverter}">
+                    <Binding ElementName="titlebar" Path="ActualHeight" />
+                    <Binding ElementName="window" Path="BorderThickness.Top" />
+                </MultiBinding>
+            </WindowChrome.CaptionHeight>
+        </WindowChrome>
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <datatemplates:EditorTemplateSelector x:Key="EditorSelector" />
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Window.Resources>
+
+    <Grid x:Name="rootGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.28*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Title Bar -->
+        <Grid
+            x:Name="titlebar"
+            Grid.Row="0"
+            Grid.ColumnSpan="3"
+            MinHeight="35"
+            Background="{DynamicResource TitleBar.Static.Background}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" MinWidth="40" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Image
+                x:Name="icon"
+                Grid.Column="0"
+                Width="24"
+                Height="24"
+                Margin="10, 0, 3, 0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                MouseDown="Icon_MouseDown"
+                Source="pack://application:,,,/AssetEditor;component/AssetEditorIcon.png"/>
+
+            <DockPanel Grid.Column="1" HorizontalAlignment="Stretch">
+                <views:MenuBarView Loaded="MenuBarView_Loaded"/>
+            </DockPanel>
+
+            <Button
+                Grid.Column="2"
+                Click="OnMinimizeButtonClick"
+                Style="{StaticResource TitleBarButtonStyle}"
+                ToolTip="Minimize">
+                <Path
+                    Width="36"
+                    Height="32"
+                    Data="M 13,15 H 23"
+                    Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                    StrokeThickness="1" />
+            </Button>
+
+            <Button
+                x:Name="maximizeRestoreButton"
+                Grid.Column="3"
+                Click="OnMaximizeRestoreButtonClick"
+                Style="{StaticResource TitleBarButtonStyle}"
+                ToolTip="Maximize"
+                ToolTipOpening="MaximizeRestoreButton_ToolTipOpening">
+                <Path
+                    Width="36"
+                    Height="32"
+                    Data="{Binding ElementName=window, Path=WindowState, Converter={StaticResource windowStateToPathConverter}}"
+                    Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                    StrokeThickness="1" />
+            </Button>
+
+            <Button
+                Grid.Column="4"
+                Click="OnCloseButtonClick"
+                Style="{StaticResource TitleBarCloseButtonStyle}"
+                ToolTip="Close">
+                <Path
+                    Width="36"
+                    Height="32"
+                    Data="M 13,11 22,20 M 13,20 22,11"
+                    Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                    StrokeThickness="1" />
+            </Button>
+        </Grid>
+
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding FileTreeColumnWidth}"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <views:FileTreeView  
+                    Grid.Row="1" 
+                    Grid.Column="0" 
+                    DataContext="{Binding FileTree}" 
+                    Padding="10, 0, 10, 5" 
+                    BorderBrush="{DynamicResource App.Border}" 
+                    BorderThickness="0, 1, 1, 0" 
+                    Visibility="{Binding IsPackFileExplorerVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+                <GridSplitter Grid.Row="1" Grid.RowSpan="1" Grid.Column="1" Width="2.9" HorizontalAlignment="Stretch" Background="{DynamicResource App.Border}" 
+                              Visibility="{Binding IsPackFileExplorerVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+                <TabControl Grid.Row="1" Grid.Column="2" ItemsSource="{Binding EditorManager.CurrentEditorsList, UpdateSourceTrigger=PropertyChanged}" 
+                        SelectedIndex="{Binding EditorManager.SelectedEditorIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                        ContentTemplateSelector="{StaticResource EditorSelector}" viewFactory:ToolFactoryParameter.ViewFactory="{Binding ToolsFactory}"
+                        Name="EditorsTabControl" BorderThickness="1, 1, 0, 0" >
+
+                <TabControl.Resources>
+                    <common:BindingProxy x:Key="Proxy" Data="{Binding}" />
+                </TabControl.Resources>
+
+                <TabControl.ItemContainerStyle>
+                    <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                        <EventSetter Event="Drop" Handler="TabItem_Drop"/>
+                        <EventSetter Event="PreviewMouseMove" Handler="TabItem_MouseMove"/>
+                        <EventSetter Event="PreviewMouseDown" Handler="TabItem_MouseDown"/>
+                        <Setter Property="AllowDrop" Value="True"/>
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="behaviors:MouseMiddleClick.Command" Value="{Binding Source={StaticResource Proxy}, Path=Data.CloseToolCommand}"/>
+                        <Setter Property="behaviors:MouseMiddleClick.CommandParameter" Value="{Binding}"/>
+                    </Style>
+                </TabControl.ItemContainerStyle>
+
+                    <TabControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.Resources>
+                                    <common:BindingProxy x:Key="GridProxy" Data="{Binding}" />
+                                </Grid.Resources>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Close"
+                                            Command="{Binding Source={StaticResource Proxy}, Path=Data.CloseToolCommand}"
+                                            CommandParameter="{Binding Source={StaticResource GridProxy}, Path=Data}" />
+                                        <MenuItem Header="Close Multiple">
+                                            <MenuItem Header="Close Other Tabs"
+                                                Command="{Binding Source={StaticResource Proxy}, Path=Data.CloseOtherToolsCommand}"
+                                                CommandParameter="{Binding Source={StaticResource GridProxy}, Path=Data}"/>
+                                            <MenuItem Header="Close All Tabs"
+                                                Command="{Binding Source={StaticResource Proxy}, Path=Data.CloseAllToolsCommand}"
+                                                CommandParameter="{Binding Source={StaticResource GridProxy}, Path=Data}"/>
+                                            <MenuItem Header="Close Tabs To Left"
+                                                Command="{Binding Source={StaticResource Proxy}, Path=Data.CloseToolsToLeftCommand}"
+                                                CommandParameter="{Binding Source={StaticResource GridProxy}, Path=Data}"/>
+                                            <MenuItem Header="Close Tabs To Right"
+                                                Command="{Binding Source={StaticResource Proxy}, Path=Data.CloseToolsToRightCommand}"
+                                                CommandParameter="{Binding Source={StaticResource GridProxy}, Path=Data}"/>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </Grid.ContextMenu>
+
+                                <TextBlock Grid.Column="0" Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasUnsavedChanges}" Value="True">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <Button Margin="4,0,-4,0"  Grid.Column="1" 
+                                Command="{Binding DataContext.CloseToolCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=TabControl}}" 
+                                CommandParameter="{Binding}"
+                                HorizontalContentAlignment="Right"
+                                Content="{materialIcons:MaterialIconExt Kind=CloseThick, Size=13 }">
+
+
+
+
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
+                </TabControl>
+            </Grid>
+        </Border>
+
+        <StatusBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="0, 1, 0, 0">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+
+            <StatusBarItem Grid.Column="0">
+                <TextBlock Text="{Binding ApplicationTitle}" Margin="8, 0, 5, 5"/>
+            </StatusBarItem>
+
+            <StatusBarItem Grid.Column="1">
+                <TextBlock Text="{Binding CurrentGame}" Margin="5, 0, 5, 5"/>
+            </StatusBarItem>
+
+            <StatusBarItem Grid.Column="2">
+                <TextBlock Text="{Binding EditablePackFile}" Margin="5, 0, 5, 5"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

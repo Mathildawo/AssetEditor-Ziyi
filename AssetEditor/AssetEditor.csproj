@@ -1,0 +1,70 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <LangVersion>preview</LangVersion>
+        <TargetFramework>net9.0-windows</TargetFramework>
+        <UseWPF>true</UseWPF>
+        <ApplicationIcon>AssetEditorIcon.ico</ApplicationIcon>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    </PropertyGroup>
+    <ItemGroup>
+      <None Remove="AssetEditorIcon.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Editors\AnimationEditor\Editors.AnimationVisualEditors.csproj" />
+        <ProjectReference Include="..\Editors\AnimationMeta\Editors.AnimationMeta.csproj" />
+        <ProjectReference Include="..\Editors\AnimationReTarget\Editors.AnimatioReTarget\Editors.AnimatioReTarget.csproj" />
+        <ProjectReference Include="..\Editors\Audio\Editors.Audio.csproj" />
+        <ProjectReference Include="..\Editors\ImportExportEditor\Editors.ImportExport\Editors.ImportExport.csproj" />
+        <ProjectReference Include="..\Editors\Kitbashing\KitbasherEditor\Editors.KitbasherEditor.csproj" />
+        <ProjectReference Include="..\Editors\Reports\Editors.Reports.csproj" />
+        <ProjectReference Include="..\Editors\SkeletonEditor\Editor.VisualSkeletonEditor\Editor.VisualSkeletonEditor.csproj" />
+        <ProjectReference Include="..\Editors\TextureEditor\Editors.TextureEditor.csproj" />
+        <ProjectReference Include="..\Editors\TwuiEditor\Editor.Twui\Editors.Twui.csproj" />
+        <ProjectReference Include="..\GameWorld\View3D\GameWorld.Core.csproj" />
+        <ProjectReference Include="..\Shared\EmbeddedResources\Shared.EmbeddedResources.csproj" />
+        <ProjectReference Include="..\Shared\SharedUI\Shared.Ui.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="..\GameWorld\ContentProject\Content\bin\Windows\Content\**\*.*">
+            <Link>Content\%(RecursiveDir)%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+        </Content>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <DebugType>embedded</DebugType>
+        <Authors>AssetEdCommunity</Authors>
+        <Company>Private</Company>
+        <Product>AssetEditor</Product>
+        <PackageProjectUrl>https://github.com/Mathildawo/AssetEditor-Ziyi</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Mathildawo/AssetEditor-Ziyi</RepositoryUrl>
+        <PackageId>AssetEditor</PackageId>
+        <AnalysisLevel>6.0</AnalysisLevel>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\.editorconfig" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="AssetEditorIcon.png" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <!--
+        Make sure any documentation comments which are included in code get checked for syntax during the build, but do
+        not report warnings for missing comments.
+        CS1573: Parameter 'parameter' has no matching param tag in the XML comment for 'parameter' (but other parameters do)
+        CS1591: Missing XML comment for publicly visible type or member 'Type_or_Member'
+        CS1712: Type parameter 'type_parameter' has no matching typeparam tag in the XML comment on 'type_or_member' (but other type parameters do)
+        -->
+        <GenerateDocumentationFile>False</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    </PropertyGroup>
+</Project>

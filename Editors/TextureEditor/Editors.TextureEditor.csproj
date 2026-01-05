@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	  <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+      <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\GameWorld\View3D\GameWorld.Core.csproj" />
+    </ItemGroup>
+
+</Project>

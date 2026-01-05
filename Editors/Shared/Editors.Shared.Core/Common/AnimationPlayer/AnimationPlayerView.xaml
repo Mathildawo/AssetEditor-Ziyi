@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="AnimationEditor.Common.AnimationPlayer.AnimationPlayerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnimationEditor.Common.AnimationPlayer"
+              xmlns:s="http://schemas.singulink.com/xaml"
+             mc:Ignorable="d" 
+              d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ToggleButton Grid.Row="0" Content="Animation" Click="ToggleButton_Click" IsChecked="{Binding IsEnabled.Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="10,1,10,1"/>
+        <Grid Grid.Row="1" Margin="0,1,0,10" x:Name="AnimationContent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".1*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width=".3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0"  >
+                    <Label Content="Main animation:" DockPanel.Dock="Left"/>
+                    <ComboBox DisplayMemberPath="SlotName.Value" ItemsSource="{Binding PlayerItems, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" SelectedItem="{Binding SelectedMainAnimation, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"   DockPanel.Dock="Right"/>
+                </DockPanel>
+                 
+                <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Frame "/>
+                        <TextBlock Text="{Binding SelectedAnimationCurrentFrame.Value, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text=" / "/>
+                        <TextBlock Text="{Binding SelectedAnimationFrameCount.Value, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Time["/>
+                        <TextBlock Text="{Binding SelectedAnimationFps.Value, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text=" fps]"/>
+                        <TextBlock Text="{Binding SelectedAnimationCurrentTime.Value, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text=" / "/>
+                        <TextBlock Text="{Binding SelectedAnimationMaxTime.Value, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </StackPanel>
+
+      
+
+                <StackPanel Grid.Row="3" Orientation="Horizontal"  HorizontalAlignment="Center" Margin="2,2,2,2" >
+                    <Button Click="{s:MethodBinding SetAnimationFirstFrame}" FontSize="20">⏮︎</Button>
+                    <Button Click="{s:MethodBinding SetAnimationPrivFrame}" FontSize="20">⏪</Button>
+                    <ToggleButton Click="{s:MethodBinding ToggleAnimationPausePlay}" FontSize="20">⏯︎</ToggleButton>
+                    <Button Click="{s:MethodBinding SetAnimationNextFrame}" FontSize="20">⏩</Button>
+                    <Button Click="{s:MethodBinding SetAnimationLastFrame}" FontSize="20">⏭</Button>
+                </StackPanel>
+
+                <CheckBox IsChecked="{Binding LoopAnimation.Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="4" Content="Loop" HorizontalAlignment="Center"/>
+            </Grid>
+
+            <ListView  Grid.Column="2" ItemsSource="{Binding PlayerItems, UpdateSourceTrigger=PropertyChanged}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Player" Width="auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding SlotName.Value, UpdateSourceTrigger=PropertyChanged}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Frames" Width="auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding MaxFrames.Value, UpdateSourceTrigger=PropertyChanged}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Animation" Width="auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding AnimationName.Value, UpdateSourceTrigger=PropertyChanged}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -191,29 +191,32 @@ namespace Editors.AnimationTextEditors.AnimationPack.Converters
                 {
                     if (pfs.FindFile(animationRef.File) == null)
                         errorList.Warning(animation.Slot, $"Animation file {animationRef.File} is not found");
-                 //   else if (!IsAnimFile(animationRef.File, pfs, errorList, animation.Slot))
-                 //       errorList.Warning(animation.Slot, $"Animation file {animationRef.File} does not appears to be a valid animation file");
+                /*    else if (!IsAnimFile(animationRef.File, pfs, errorList, animation.Slot))
+                        errorList.Warning(animation.Slot, $"Animation file {animationRef.File} does not appears to be a valid animation file");
                     else if (string.IsNullOrWhiteSpace(animationRef.File))
                         errorList.Warning(animation.Slot, $"Animation file {animationRef.File} contain whitespace which could trigger a tpose");
                     else
                         ValidateAnimationVersionAgainstPersistenceMeta(animationRef.File, animation.Slot, type.Data.SkeletonName, pfs, errorList);
 
                     if (pfs.FindFile(animationRef.Meta) == null)
-                        errorList.Warning(animation.Slot, $"Meta file {animationRef.Meta} is not found");
-                 //   else if (!IsAnimMetaFile(animationRef.Meta, pfs, errorList, animation.Slot))
-                 //       errorList.Warning(animation.Slot, $"Meta file {animationRef.Meta} does not appear to be a valid meta animation");
+                        Console.WriteLine($"Meta file {animationRef.Meta} is not found");
+                        // errorList.Warning(animation.Slot, $"Meta file {animationRef.Meta} is not found");
+                    else if (!IsAnimMetaFile(animationRef.Meta, pfs, errorList, animation.Slot))
+                        errorList.Warning(animation.Slot, $"Meta file {animationRef.Meta} does not appear to be a valid meta animation");
                     else
                     {
-                 //       CheckForAnimationVersionsInMeta(animationRef.File, animationRef.Meta, animation.Slot, type.Data.SkeletonName, pfs, errorList);
+                        CheckForAnimationVersionsInMeta(animationRef.File, animationRef.Meta, animation.Slot, type.Data.SkeletonName, pfs, errorList);
                     }
 
                     var mountBin = type.Data.MountBin;
-                 //   CheckForRiderAndHisMountAnimationsVersion(mountBin, AnimPackToValidate, animation.Slot, animationRef.File, pfs, errorList);
+                    CheckForRiderAndHisMountAnimationsVersion(mountBin, AnimPackToValidate, animation.Slot, animationRef.File, pfs, errorList);
 
-                 //   if (pfs.FindFile(animationRef.Sound) == null)
-                 //       errorList.Warning(animation.Slot, $"Sound file {animationRef.Sound} is not found");
-                 //   else if (!IsSndMetaFile(animationRef.Sound, pfs, errorList, animation.Slot))
-                 //       errorList.Warning(animation.Slot, $"Sound file {animationRef.Sound} does not appear to be a valid meta sound");
+                    if (pfs.FindFile(animationRef.Sound) == null)
+                        Console.WriteLine($"Sound file {animationRef.Sound} is not found");
+                    // errorList.Warning(animation.Slot, $"Sound file {animationRef.Sound} is not found");
+                    else if (!IsSndMetaFile(animationRef.Sound, pfs, errorList, animation.Slot))
+                        errorList.Warning(animation.Slot, $"Sound file {animationRef.Sound} does not appear to be a valid meta sound");
+                */
                 }
             }
 

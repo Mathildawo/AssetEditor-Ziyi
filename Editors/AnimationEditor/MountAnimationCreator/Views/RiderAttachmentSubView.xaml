@@ -62,14 +62,14 @@
             </Grid>
 
 
-            <Label Grid.Column="0" Grid.Row="2" Content="Mount Vertex"/>
+            <Label Grid.Column="0" Grid.Row="2" Content="Mount Vertex" AutomationProperties.IsColumnHeader="True" ToolTip="Hit [F3] after Mount mesh selected"/>
             <Label Grid.Column="1" Grid.Row="2" Content=":"/>
             <Grid Grid.Row="2" Grid.Column="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.75*"/>
                     <ColumnDefinition Width="0.25*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" Text="{Binding SelectedVertexesText.Value, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" IsReadOnly="true" />
+                <TextBox Grid.Column="0" Text="{Binding SelectedVertexesText.Value, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" IsReadOnly="true" ToolTip="When mount selected, press [F3] to switch to vertex mode" />
                 <Button  Grid.Column="1" Click="{s:MethodBinding SetMountVertex}" Content="Set" Margin="3,0,0,0"/>
             </Grid>
 

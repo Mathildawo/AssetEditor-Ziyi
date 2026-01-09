@@ -129,6 +129,11 @@ namespace Shared.Core.PackFiles
             var compressionFormat = GetCompressionFormat(magicNumber);
             stream.Seek(-4, SeekOrigin.Current);
 
+            if (data.Length == 100 || data.Length == 20) // for avoiding Zstd decompress error
+               {
+                return data;
+               }
+
             if (compressionFormat == CompressionFormat.Zstd)
                 return DecompressZstd(reader, uncompressedSize);
             if (compressionFormat == CompressionFormat.Lz4)
@@ -136,7 +141,8 @@ namespace Shared.Core.PackFiles
             else if (compressionFormat == CompressionFormat.Lzma1)
                 result = DecompressLzma(data, uncompressedSize);
             else if (compressionFormat == CompressionFormat.None)
-                return data;  
+                return data;
+
 
             if (result.Length != uncompressedSize)
                 throw new InvalidDataException($"Expected {uncompressedSize:N0} bytes after decompression, but got {result.Length:N0}.");

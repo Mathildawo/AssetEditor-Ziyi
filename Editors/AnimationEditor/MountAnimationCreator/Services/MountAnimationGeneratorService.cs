@@ -117,22 +117,22 @@ namespace AnimationEditor.MountAnimationCreator.Services
             return _riderSkeleton;
         }
 
-        //static public PackFile SaveAnimation(PackFileService pfs, string riderAnimationName, string savePrefix, bool ensureUniqeName, AnimationClip clip, GameSkeleton skeleton)
-        //{
-        //    var animFile = clip.ConvertToFileFormat(skeleton);
-        //    var bytes = AnimationFile.ConvertToBytes(animFile);
-        //
-        //    string savePath = "";
-        //    if (string.IsNullOrWhiteSpace(savePrefix) == false)
-        //    {
-        //        if (ensureUniqeName)
-        //            savePath = GenerateNewAnimationName(pfs, riderAnimationName, savePrefix);
-        //        else
-        //            savePath = Path.GetDirectoryName(riderAnimationName) + "\\" + savePrefix + Path.GetFileName(riderAnimationName);
-        //    }
-        //
-        //    return SaveHelper.Save(pfs, savePath, null, bytes);
-        //}
+        static public PackFile SaveAnimation(IPackFileService pfs, string riderAnimationName, string savePrefix, bool ensureUniqeName, AnimationClip clip, GameSkeleton skeleton, IFileSaveService fileSaveService)
+        {
+            var animFile = clip.ConvertToFileFormat(skeleton);
+            var bytes = AnimationFile.ConvertToBytes(animFile);
+        
+            string savePath = "";
+            if (string.IsNullOrWhiteSpace(savePrefix) == false)
+            {
+                if (ensureUniqeName)
+                    savePath = GenerateNewAnimationName(pfs, riderAnimationName, savePrefix);
+                else
+                    savePath = Path.GetDirectoryName(riderAnimationName) + "\\" + savePrefix + Path.GetFileName(riderAnimationName);
+            }
+        
+            return fileSaveService.Save(savePath, bytes, false);
+        }
 
         static string GenerateNewAnimationName(IPackFileService pfs, string fullPath, string prefix, int numberId = 0)
         {
@@ -178,3 +178,4 @@ namespace AnimationEditor.MountAnimationCreator.Services
         }
     }
 }
+

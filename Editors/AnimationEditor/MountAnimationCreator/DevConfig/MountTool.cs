@@ -47,183 +47,185 @@ namespace Editors.AnimationVisualEditors.MountAnimationCreator.DevConfig
     }
 }
 
-/*  public static class MountAnimationCreator_Debug
+  public static class MountAnimationCreator_Debug
   {
-      public static void CreateDamselAndGrymgoreEditor(IEditorCreator creator, IToolFactory toolFactory, PackFileService packfileService)
+      public static void CreateDamselAndGrymgoreEditor(IEditorCreator creator, IEditorDatabase toolFactory, PackFileService packfileService)
       {
-          var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
+        //var editorView = toolFactory.Create("Mount Editor",EditorEnums.MountTool_Editor); //toolFactory.Create<MountAnimationCreatorViewModel>();
 
-          editorView.MainInput = new AnimationToolInput()
+        var MainInput = new AnimationToolInput() //var MainInput 
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\brt_damsel_campaign_01.variantmeshdefinition")
           };
 
-          editorView.RefInput = new AnimationToolInput()
+        var RefInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\lzd_carnosaur_grymloq.variantmeshdefinition")
           };
 
-          creator.CreateEmptyEditor(editorView);
+        //CreateEmptyEditor(editorView);
+        creator.Create(EditorEnums.MountTool_Editor, x => (x as EditorHost<MountAnimationCreatorViewModel>).Editor.SetDebugInputParameters(MainInput, RefInput));
       }
 
 
-      public static void CreateKarlAndSquigEditor(IEditorCreator creator, IToolFactory toolFactory, PackFileService packfileService)
+      public static void CreateKarlAndSquigEditor(IEditorCreator creator, IEditorDatabase toolFactory, PackFileService packfileService)
       {
-          var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
+          //var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
 
-          editorView.MainInput = new AnimationToolInput()
+          var MainInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\emp_ch_karl.variantmeshdefinition")
           };
 
-          editorView.RefInput = new AnimationToolInput()
+          var RefInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\grn_great_cave_squig.variantmeshdefinition")
           };
 
-          creator.CreateEmptyEditor(editorView);
+          //creator.CreateEmptyEditor(editorView);
+          creator.Create(EditorEnums.MountTool_Editor, x => (x as EditorHost<MountAnimationCreatorViewModel>).Editor.SetDebugInputParameters(MainInput, RefInput));
       }
 
-      public static void CreateBroodHorrorEditor(IEditorCreator creator, IToolFactory toolFactory, PackFileService packfileService)
+      public static void CreateBroodHorrorEditor(IEditorCreator creator, IEditorDatabase toolFactory, PackFileService packfileService)
       {
-          var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
+          //var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
 
-          editorView.MainInput = new AnimationToolInput()
+          var MainInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\skv_plague_priest.variantmeshdefinition")
           };
 
-          editorView.RefInput = new AnimationToolInput()
+          var RefInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\skv_brood_horror.variantmeshdefinition")
           };
 
-          creator.CreateEmptyEditor(editorView);
-      }
+         creator.Create(EditorEnums.MountTool_Editor, x => (x as EditorHost<MountAnimationCreatorViewModel>).Editor.SetDebugInputParameters(MainInput, RefInput));
+    }
 
-      public static void CreateLionAndHu01b(IEditorCreator creator, IToolFactory toolFactory, PackFileService packfileService)
+      public static void CreateLionAndHu01b(IEditorCreator creator, IEditorDatabase toolFactory, PackFileService packfileService)
       {
-          var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
+          //var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
 
-          editorView.MainInput = new AnimationToolInput()
+          var MainInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\hef_princess_campaign_01.variantmeshdefinition")
           };
 
-          editorView.RefInput = new AnimationToolInput()
+          var RefInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\hef_war_lion.variantmeshdefinition")
           };
 
-          creator.CreateEmptyEditor(editorView);
-      }
+          creator.Create(EditorEnums.MountTool_Editor, x => (x as EditorHost<MountAnimationCreatorViewModel>).Editor.SetDebugInputParameters(MainInput, RefInput));
+    }
 
-      public static void CreateLionAndHu01c(IEditorCreator creator, IToolFactory toolFactory, PackFileService packfileService)
+      public static void CreateLionAndHu01c(IEditorCreator creator, IEditorDatabase toolFactory, PackFileService packfileService)
       {
-          var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
+          //var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
 
-          editorView.MainInput = new AnimationToolInput()
+          var MainInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\chs_marauder_horsemen.variantmeshdefinition")
           };
 
-          editorView.RefInput = new AnimationToolInput()
+          var RefInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\hef_war_lion.variantmeshdefinition")
           };
 
-          creator.CreateEmptyEditor(editorView);
-      }
+          creator.Create(EditorEnums.MountTool_Editor, x => (x as EditorHost<MountAnimationCreatorViewModel>).Editor.SetDebugInputParameters(MainInput, RefInput));
+    }
 
-      public static void CreateRaptorAndHu01b(IEditorCreator creator, IToolFactory toolFactory, PackFileService packfileService)
+      public static void CreateRaptorAndHu01b(IEditorCreator creator, IEditorDatabase toolFactory, PackFileService packfileService)
       {
-          var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
+          //var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
 
-          editorView.MainInput = new AnimationToolInput()
+          var MainInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\hef_princess_campaign_01.variantmeshdefinition")
           };
 
-          editorView.RefInput = new AnimationToolInput()
+          var RefInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\def_cold_one.variantmeshdefinition")
           };
 
-          creator.CreateEmptyEditor(editorView);
-      }
+          creator.Create(EditorEnums.MountTool_Editor, x => (x as EditorHost<MountAnimationCreatorViewModel>).Editor.SetDebugInputParameters(MainInput, RefInput));
+    }
 
-      public static void CreateRaptorAndHu01d(IEditorCreator creator, IToolFactory toolFactory, PackFileService packfileService)
+      public static void CreateRaptorAndHu01d(IEditorCreator creator, IEditorDatabase toolFactory, PackFileService packfileService)
       {
-          var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
+          //var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
 
-          editorView.MainInput = new AnimationToolInput()
+          var MainInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\hef_archer_armoured.variantmeshdefinition"),
           };
 
-          editorView.RefInput = new AnimationToolInput()
+          var RefInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\def_cold_one.variantmeshdefinition"),
           };
 
-          creator.CreateEmptyEditor(editorView);
-      }
+          creator.Create(EditorEnums.MountTool_Editor, x => (x as EditorHost<MountAnimationCreatorViewModel>).Editor.SetDebugInputParameters(MainInput, RefInput));
+    }
 
-      public static void CreateRaptorAndHu02(IEditorCreator creator, IToolFactory toolFactory, PackFileService packfileService)
+      public static void CreateRaptorAndHu02(IEditorCreator creator, IEditorDatabase toolFactory, PackFileService packfileService)
       {
-          var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
+          //var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
 
-          editorView.MainInput = new AnimationToolInput()
+          var MainInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\grn_savage_orc_base.variantmeshdefinition"),
           };
 
-          editorView.RefInput = new AnimationToolInput()
+          var RefInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\variantmeshdefinitions\def_cold_one.variantmeshdefinition"),
           };
 
-          creator.CreateEmptyEditor(editorView);
-      }
+         creator.Create(EditorEnums.MountTool_Editor, x => (x as EditorHost<MountAnimationCreatorViewModel>).Editor.SetDebugInputParameters(MainInput, RefInput));
+    }
 
 
-      public static void CreateRome2WolfRider(IEditorCreator creator, IToolFactory toolFactory, PackFileService packfileService)
+      public static void CreateRome2WolfRider(IEditorCreator creator, IEditorDatabase toolFactory, PackFileService packfileService)
       {
-          var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
+          //var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
 
-          editorView.MainInput = new AnimationToolInput()
+          var MainInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\_variantmodels\man\skin\barb_base_full.rigid_model_v2"),
               Animation = packfileService.FindFile(@"animations\rome2\riders\horse_rider\cycles\rider\horse_rider_walk.anim"),
           };
 
-          editorView.RefInput = new AnimationToolInput()
+          var RefInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\wh_variantmodels\wf1\grn\grn_giant_wolf\grn_giant_wolf_1.rigid_model_v2"),
               Animation = packfileService.FindFile(@"animations\battle\wolf01\locomotion\wf1_walk_01.anim")
           };
 
-          creator.CreateEmptyEditor(editorView);
-      }
+          creator.Create(EditorEnums.MountTool_Editor, x => (x as EditorHost<MountAnimationCreatorViewModel>).Editor.SetDebugInputParameters(MainInput, RefInput));
+    }
 
-      public static void CreateRome2WolfRiderAttack(IEditorCreator creator, IToolFactory toolFactory, PackFileService packfileService)
+      public static void CreateRome2WolfRiderAttack(IEditorCreator creator, IEditorDatabase toolFactory, PackFileService packfileService)
       {
-          var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
+          //var editorView = toolFactory.Create<MountAnimationCreatorViewModel>();
 
-          editorView.MainInput = new AnimationToolInput()
+          var MainInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\_variantmodels\man\skin\barb_base_full.rigid_model_v2"),
               Animation = packfileService.FindFile(@"animations\rome2\riders\horse_rider\attack\rider\sws_rider_attack_01.anim"),
           };
 
-          editorView.RefInput = new AnimationToolInput()
+          var RefInput = new AnimationToolInput()
           {
               Mesh = packfileService.FindFile(@"variantmeshes\wh_variantmodels\wf1\grn\grn_giant_wolf\grn_giant_wolf_1.rigid_model_v2"),
               Animation = packfileService.FindFile(@"animations\battle\wolf01\attacks\wf1_attack_01.anim")
           };
 
-          creator.CreateEmptyEditor(editorView);
-      }
+          creator.Create(EditorEnums.MountTool_Editor, x => (x as EditorHost<MountAnimationCreatorViewModel>).Editor.SetDebugInputParameters(MainInput, RefInput));
+    }
 
 
-  }*/
+  }

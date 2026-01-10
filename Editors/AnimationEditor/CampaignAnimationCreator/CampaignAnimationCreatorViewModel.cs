@@ -31,13 +31,13 @@ namespace AnimationEditor.CampaignAnimationCreator
         public override Type EditorViewModelType => typeof(EditorView);
 
         public CampaignAnimationCreatorViewModel(
-            IEditorHostParameters inputParams,
+            IEditorHostParameters editorHostParameters,
             SceneObjectEditor assetViewModelEditor,
             SceneObjectViewModelBuilder referenceModelSelectionViewModelBuilder,
             IFileSaveService packFileSaveService,
-            AnimationToolInput animationToolInput)
-            : base(inputParams)
+            AnimationToolInput animationToolInput) : base(editorHostParameters)
         {
+            DisplayName = EditorName;
             _assetViewModelEditor = assetViewModelEditor;
             _referenceModelSelectionViewModelBuilder = referenceModelSelectionViewModelBuilder;
             _packFileSaveService = packFileSaveService;
